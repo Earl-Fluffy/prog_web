@@ -1,2 +1,4 @@
 imgs/*
 tags/*
+venv
+__pychache__
