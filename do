@@ -58,7 +58,7 @@ get_libs () {
 }
 
 serve () {
-  #FLASK_APP=app FLASK_ENV=development ${VENV}/bin/flask run
+  FLASK_APP=app FLASK_ENV=development ${VENV}/bin/flask run
   DEBUG=Y "${PYTHON3}" "${ROOT}/app.py"
 }
 
@@ -69,10 +69,10 @@ shell () {
 if [ ! -e "${VENV}/bin/activate" ];then
     _mkvenv
 fi
-if [ ! -e "${ROOT}/database.db" ];then
-  echo "Init sqlite database"
-  FLASK_APP=app FLASK_ENV=development "${VENV}/bin/flask" shell -c "import dbmgmt; dbmgmt.init_db();"
-fi
+# if [ ! -e "${ROOT}/database.db" ];then
+  # echo "Init sqlite database"
+  # FLASK_APP=app FLASK_ENV=development "${VENV}/bin/flask" shell -c "import dbmgmt; dbmgmt.init_db();"
+# fi
 
 if [ $# -eq 0 ]
 then
