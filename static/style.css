@@ -1,3 +1,16 @@
+aside {
+	display: inline-block;
+	vertical-align: top;
+	box-sizing: border-box;
+	width: 20%;
+}
+.sectionWthSide {
+	display: inline-block;
+	vertical-align: top;
+	box-sizing: border-box;
+	width: 70%;
+}
+
 ul#navbarMenu {
   list-style-type: none;
   margin: 0;
