@@ -2,13 +2,13 @@
 <html>
     <title>{{page_title|default('crop land')}}</title>
     <!--<link href="{{ url_for('static',filename='style.css')}}" rel="stylesheet"> -->
-    {%block head%}{% endblock}
+    {%block head%}{% endblock %}
     </head>
     <body>
         <ul id="navbarMenu">
             <li class="navItem"><a href="{{ url_for('index') }}#home">Home</a></li>
-            <li class="navItem"><a href="{{ url_for('users') }}">Users</a></li>
-            <li class="navItem"><a href="{{ url_for('about') }}">About</a></li>
+            <li class="navItem"><a href="{{ url_for('index') }}">Users</a></li>
+            <li class="navItem"><a href="{{ url_for('index') }}">About</a></li>
         </ul>
         
 {% block content %}{% endblock %}

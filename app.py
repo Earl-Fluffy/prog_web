@@ -29,8 +29,8 @@ def close_connection(exception):
 
 @app.route('/')
 @app.route('/index')
-def home():
-    return make_response('test')
+def index():
+    return render_template('index.html')
 
 @app.route('/<key>')
 @app.route('/img/<key>')
