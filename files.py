@@ -5,9 +5,13 @@ import json
 
 
 def keys():
-    return {f.split('.')[0]
-            for f in listdir("./static/imgs")
+    return {f.split('.')[0] for f in listdir("./static/imgs")
             if isfile(join("./static/imgs", f))}
+
+def tags(key):
+    key = format(int(key), '06d')
+    ret = json.load(open(f"./static/tags/{key}.json", "r"))
+    return ret
 
 
 if __name__ == "__main__":

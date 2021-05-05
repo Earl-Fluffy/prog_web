@@ -7,13 +7,16 @@ from flask import render_template
 from flask import json
 
 import json as js
+import files
 
 
 # Set API dev in an another file
 from api import SITE_API
 
 ## START: DO NOT MODIFY THIS PART ##
-app = Flask(__name__)
+app = Flask(__name__,
+            static_url_path="/static",
+            static_folder="static")
 # Add the API
 app.register_blueprint(SITE_API)
 
@@ -35,7 +38,7 @@ def index():
 @app.route('/<key>')
 @app.route('/img/<key>')
 def img(key):
-    context = {"id": format(int(key), '06d')}
+    context = files.tags(key)
     app.logger.debug(context["id"])
     return render_template('img.html', context=context)
 
