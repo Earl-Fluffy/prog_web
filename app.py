@@ -39,7 +39,7 @@ def index():
 @app.route('/img/<key>')
 def img(key):
     context = files.tags(key)
-    app.logger.debug(context["id"])
+    app.logger.debug(context)
     return render_template('img.html', context=context)
 
 @app.route('/about')

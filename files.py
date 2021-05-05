@@ -18,12 +18,13 @@ def tags(key):
 if __name__ == "__main__":
 
     files = [f for f in listdir("./static/imgs")
-             if isfile(join("./static/imgs", f))]
+             if isfile(f"./static/imgs/{f}")]
     for i, f in enumerate(files):
         key = format(i, '06d')
-        path = f"./static/imgs/{key}.{f.split('.')[1]}"
-        shutil.move(f"./static/imgs/{f}",
-                    path)
+        path = f"/imgs/{key}.{f.split('.')[1]}"
+        print(path)
+        #shutil.move(f"./static/imgs/{f}",
+                    #path)
         json.dump({"id": key,
                    "path": path,
                    "tags": ["test"]},
