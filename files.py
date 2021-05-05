@@ -1,4 +1,4 @@
-from os import listdir
+from os import listdir, scandir
 from os.path import isfile, join
 import shutil
 import json
@@ -19,12 +19,13 @@ if __name__ == "__main__":
 
     files = [f for f in listdir("./static/imgs")
              if isfile(f"./static/imgs/{f}")]
+    print(len(files))
+    files = sorted(files)
     for i, f in enumerate(files):
         key = format(i, '06d')
-        path = f"/imgs/{key}.{f.split('.')[1]}"
-        print(path)
-        #shutil.move(f"./static/imgs/{f}",
-                    #path)
+        path = f"imgs/{key}.{f.split('.')[1]}"
+        shutil.move(f"./static/imgs/{f}",
+                    f"./static/imgs/{key}.{f.split('.')[1]}")
         json.dump({"id": key,
                    "path": path,
                    "tags": ["test"]},
