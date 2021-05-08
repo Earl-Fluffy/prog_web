@@ -30,25 +30,22 @@ def close_connection(exception):
 ## END: DO NOT MODIFY THIS PART ##
 
 # Get the tags list
-tagsFile = open("static/tagsList.txt","r")
-tagsList = [tag.rstrip("\n") for tag in tagsFile.read().split('\t')]
-print(tagsList)
+tagsSet = files.list_tags()
 
 @app.route('/')
 @app.route('/index')
 @app.route('/index/<tag>')
 def index(tag=None):
     keys = files.keys()
-    context=[]
-    print(tag)
-    for key in keys:
-        if not tag :
-            context.append(files.tags(key))
-        else:
-            if tag in files.tags(key)['tags']:
-                print('hey')
-                context.append(files.tags(key))
-    return render_template('index.html',context=context,tagsList=tagsList)
+    metadatas = [files.metadata(key) for key in keys]
+    if tag:
+        metadatas = [metadata for metadata in metadatas
+                     if tag in metadata["tags"]]
+    context = {"imgs": metadatas,
+               "tags": list(tagsSet),
+               "nb_imgs": len(metadatas)}
+    return render_template('index.html',
+                           context=context)
 
 @app.route('/<key>', methods=["GET", "POST"])
 @app.route('/img/<key>', methods=["GET", "POST"])
@@ -56,8 +53,13 @@ def img(key):
     if request.method == "POST":
         new_tag = request.form['newtag']
         files.add_tag(key, new_tag)
-    context = files.tags(key)
-    return render_template('img.html', context=context,tagsList=tagsList)
+        if new_tag not in tagsSet:
+            tagsSet.add(new_tag)
+            tagsSet = files.update_tagSet(tagsSet, new_tag)
+    context = files.metadata(key)
+    context = {"metadata": files.metadata(key),
+               "tags": list(tagsSet)}
+    return render_template('img.html', context=context)
 
 @app.route('/about')
 def about():

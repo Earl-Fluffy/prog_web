@@ -1,13 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Image {{context.id}}</h1>
+
+<h1>Image {{context.metadata.id}}</h1>
 <section class="sectionWithSide">
-<img src="{{ url_for('static', filename=context.path) }}">
+<img src="{{ url_for('static', filename=context.metadata.path) }}">
 </section><aside>
+
 <h3> Tags associés </h3>
 <ul>
-{% for tag in context.tags %}
+{% for tag in context.metadata.tags %}
 <li> {{ tag }}</li>
 {% endfor %}
 <form method='post' action="">
@@ -16,6 +18,7 @@
     <input type="submit" value="Submit">
 </form>
 </ul>
+
 <h3>Favoris pour :</h3>
 <ul>
 <li> Some more dynamic work </li>
@@ -23,5 +26,14 @@
 </aside>
 <!--{{ context.tags }}
 {{ context.path }} -->
+
+</section><aside>
+    <h3>Les tags</h3>
+        <ul>
+        {% for tag in context.tags %}
+        <li> <a href="{{ url_for('index',tag=tag) }}">{{ tag }}</a></li>
+        {% endfor %}
+        </ul>
+</aside>
 
 {% endblock %}
