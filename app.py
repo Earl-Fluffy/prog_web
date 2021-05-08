@@ -50,12 +50,13 @@ def index(tag=None):
                 context.append(files.tags(key))
     return render_template('index.html',context=context,tagsList=tagsList)
 
-@app.route('/<key>')
-@app.route('/img/<key>')
+@app.route('/<key>', methods=["GET", "POST"])
+@app.route('/img/<key>', methods=["GET", "POST"])
 def img(key):
+    if request.method == "POST":
+        new_tag = request.form['newtag']
+        files.add_tag(key, new_tag)
     context = files.tags(key)
-    app.logger.debug(context)
-    print(tagsList)
     return render_template('img.html', context=context,tagsList=tagsList)
 
 @app.route('/about')

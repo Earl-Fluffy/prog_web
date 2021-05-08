@@ -10,14 +10,10 @@
 {% for tag in context.tags %}
 <li> {{ tag }}</li>
 {% endfor %}
-<form method='post'>
-<label for="newtag"> Add a tag :</label><select id="newtag">
-    <option value="">--Please choose an option--</option>
-    {% for tag in tagsList %}
-    <option value={{tag}}> {{ tag }}</option>
-    {% endfor %}
-</select>
-<input type="submit" value="Submit">
+<form method='post' action="">
+    <label for="newtag"> Add a tag :</label>
+    <input id="newtag" type="text" name="newtag">
+    <input type="submit" value="Submit">
 </form>
 </ul>
 <h3>Favoris pour :</h3>

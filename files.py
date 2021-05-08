@@ -15,6 +15,13 @@ def tags(key):
     return ret
 
 
+def add_tag(key, tag):
+    img_metadata = json.load(open(f"./static/tags/{key}.json", "r"))
+    img_metadata["tags"].append(tag)
+    json.dump(img_metadata,
+              open(f"./static/tags/{key}.json", "w"))
+
+
 if __name__ == "__main__":
 
     files = [f for f in listdir("./static/imgs")
