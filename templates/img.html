@@ -1,10 +1,31 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+<h1>Image {{context.id}}</h1>
+<section class="sectionWithSide">
 <img src="{{ url_for('static', filename=context.path) }}">
-
-{{ context.tags }}
-{{ context.path }}
+</section><aside>
+<h3> Tags associés </h3>
+<ul>
+{% for tag in context.tags %}
+<li> {{ tag }}</li>
+{% endfor %}
+<form method='post'>
+<label for="newtag"> Add a tag :</label><select id="newtag">
+    <option value="">--Please choose an option--</option>
+    {% for tag in tagsList %}
+    <option value={{tag}}> {{ tag }}</option>
+    {% endfor %}
+</select>
+<input type="submit" value="Submit">
+</form>
+</ul>
+<h3>Favoris pour :</h3>
+<ul>
+<li> Some more dynamic work </li>
+</ul>
+</aside>
+<!--{{ context.tags }}
+{{ context.path }} -->
 
 {% endblock %}

@@ -9,13 +9,15 @@
 <section class="sectionWthSide">
 <div class="wrapper">
 {% for img_link in context %}
-	<img src="{{ url_for('static', filename=img_link.path) }}" width=150>
+	<a href="{{ url_for('img', key=img_link.id) }}"><img src="{{ url_for('static', filename=img_link.path) }}" width=150></a>
 {% endfor %}
 </div>
 </section><aside>
 <h3>Les tags</h3>
 <ul>
-	<li>test, faudrait faire un lien</li>
+{% for tag in tagsList %}
+<li> <a href="{{ url_for('index',tag=tag) }}">{{ tag }}</a></li>
+{% endfor %}
 </ul>
 </aside>
 {% endblock %}

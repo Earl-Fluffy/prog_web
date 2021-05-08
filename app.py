@@ -29,23 +29,34 @@ def close_connection(exception):
         db.close()
 ## END: DO NOT MODIFY THIS PART ##
 
+# Get the tags list
+tagsFile = open("static/tagsList.txt","r")
+tagsList = [tag.rstrip("\n") for tag in tagsFile.read().split('\t')]
+print(tagsList)
 
 @app.route('/')
 @app.route('/index')
-def index():
+@app.route('/index/<tag>')
+def index(tag=None):
     keys = files.keys()
     context=[]
+    print(tag)
     for key in keys:
-        #print(key) #000000, 000001 etc
-        context.append(files.tags(key))
-    return render_template('index.html',context=context)
+        if not tag :
+            context.append(files.tags(key))
+        else:
+            if tag in files.tags(key)['tags']:
+                print('hey')
+                context.append(files.tags(key))
+    return render_template('index.html',context=context,tagsList=tagsList)
 
 @app.route('/<key>')
 @app.route('/img/<key>')
 def img(key):
     context = files.tags(key)
     app.logger.debug(context)
-    return render_template('img.html', context=context)
+    print(tagsList)
+    return render_template('img.html', context=context,tagsList=tagsList)
 
 @app.route('/about')
 def about():
