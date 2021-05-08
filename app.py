@@ -42,6 +42,9 @@ def index(tag=None):
     if tag:
         metadatas = [metadata for metadata in metadatas
                      if tag in metadata["tags"]]
+    metadatas = sorted(metadatas,
+                       key=lambda x: x["id"],
+                       reverse=True)
     context = {"imgs": metadatas,
                "tags": list(tagsSet),
                "nb_imgs": len(metadatas)}
