@@ -7,7 +7,11 @@
 	<button class="" type="submit">Search</button>
 </form>
 <section class="sectionWthSide">
-Lots of nice crops
+<div class="wrapper">
+{% for img_link in context %}
+	<img src="{{ url_for('static', filename=img_link.path) }}" width=150>
+{% endfor %}
+</div>
 </section><aside>
 <h3>Les tags</h3>
 <ul>

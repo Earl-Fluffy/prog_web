@@ -43,3 +43,9 @@ li.navItem a.active {
   color: white;
   background-color: #4CAF50;
 }
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+}

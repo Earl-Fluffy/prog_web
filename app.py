@@ -33,7 +33,12 @@ def close_connection(exception):
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('index.html')
+    keys = files.keys()
+    context=[]
+    for key in keys:
+        #print(key) #000000, 000001 etc
+        context.append(files.tags(key))
+    return render_template('index.html',context=context)
 
 @app.route('/<key>')
 @app.route('/img/<key>')
