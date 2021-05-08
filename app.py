@@ -31,6 +31,7 @@ def close_connection(exception):
 
 # Get the tags list
 tagsSet = files.list_tags()
+print(tagsSet)
 
 @app.route('/')
 @app.route('/index')
@@ -50,6 +51,7 @@ def index(tag=None):
 @app.route('/<key>', methods=["GET", "POST"])
 @app.route('/img/<key>', methods=["GET", "POST"])
 def img(key):
+    global tagsSet
     if request.method == "POST":
         new_tag = request.form['newtag']
         files.add_tag(key, new_tag)
