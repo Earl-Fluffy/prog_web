@@ -31,17 +31,17 @@ def close_connection(exception):
 
 # Get the tags list
 tagsSet = files.list_tags()
-print(tagsSet)
 
 @app.route('/')
 @app.route('/index')
 def index():
     keys = files.keys()
     metadatas = [files.metadata(key) for key in keys]
-    tag = request.args.get('pattern', '')
-    if tag:
-        metadatas = [metadata for metadata in metadatas
-                     if tag in metadata["tags"]]
+    tags = request.args.get('pattern', '').split(" ")
+    if tags:
+        for tag in tags:
+            metadatas = [metadata for metadata in metadatas
+                         if tag in metadata["tags"]]
     metadatas = sorted(metadatas,
                        key=lambda x: x["id"],
                        reverse=True)
@@ -56,7 +56,7 @@ def index():
 def img(key):
     global tagsSet
     if request.method == "POST":
-        new_tag = request.form['newtag']
+        new_tag = request.form['newtag'].replace(' ', '_')
         files.add_tag(key, new_tag)
         if new_tag not in tagsSet:
             tagsSet.add(new_tag)
