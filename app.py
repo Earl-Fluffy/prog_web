@@ -35,10 +35,10 @@ print(tagsSet)
 
 @app.route('/')
 @app.route('/index')
-@app.route('/index/<tag>')
-def index(tag=None):
+def index():
     keys = files.keys()
     metadatas = [files.metadata(key) for key in keys]
+    tag = request.args.get('pattern', '')
     if tag:
         metadatas = [metadata for metadata in metadatas
                      if tag in metadata["tags"]]

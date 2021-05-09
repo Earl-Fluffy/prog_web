@@ -3,7 +3,7 @@
 {% block content %}
 <h1>Home</h1>
 
-<form class="" method="get" action="/">
+<form class="" method="get" action="/index">
 	<input class="" placeholder="Search" type="text" name="pattern">
 	<button class="" type="submit">Search</button>
 </form>
@@ -24,7 +24,7 @@
     <h3>Les tags</h3>
         <ul>
         {% for tag in context.tags %}
-        <li> <a href="{{ url_for('index',tag=tag) }}">{{ tag }}</a></li>
+        <li> <a href="{{ url_for('index') }}?pattern={{ tag }}">{{ tag }}</a></li>
         {% endfor %}
         </ul>
 </aside>
