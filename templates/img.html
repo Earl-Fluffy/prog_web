@@ -4,7 +4,10 @@
 
 <h1>Image {{context.metadata.id}}</h1>
 <section class="sectionWithSide">
-<img src="{{ url_for('static', filename=context.metadata.path) }}">
+<img src="{{ url_for('static', filename=context.metadata.path) }}"
+     id="displayed_img"
+     onmouseover="zoomIn()"
+     onmouseout="zoomOut()">
 </section><aside>
 
 <h3> Tags associés </h3>
@@ -35,5 +38,14 @@
         {% endfor %}
         </ul>
 </aside>
+
+<script>
+    function zoomIn() {
+        document.getElementById("displayed_img").style.width = "30%";
+    }
+    function zoomOut() {
+        document.getElementById("displayed_img").style.width = "20%";
+    }
+</script>
 
 {% endblock %}
