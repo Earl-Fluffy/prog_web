@@ -4,7 +4,10 @@
 
 <h1>Image {{context.metadata.id}}</h1>
 <section class="sectionWithSide">
-<img src="{{ url_for('static', filename=context.metadata.path) }}">
+<img src="{{ url_for('static', filename=context.metadata.path) }}"
+     id="displayed_img"
+     onmouseover="zoomIn()"
+     onmouseout="zoomOut()">
 </section><aside>
 
 <h3> Tags associés </h3>
@@ -14,14 +17,21 @@
 {% endfor %}
 <form method='post' action="">
     <label for="newtag"> Add a tag :</label>
-    <input id="newtag" type="text" name="newtag">
+    <input id="newtag" type="text" name="newtag" list=tagsOptions>
+    <datalist id=tagsOptions>
+    {% for tag in context.tags %}
+    <option> {{tag}}
+    {% endfor %}
+    </datalist>
     <input type="submit" value="Submit">
 </form>
 </ul>
 
 <h3>Favoris pour :</h3>
 <ul>
-<li> Some more dynamic work </li>
+{% for user in favUsers %}
+<li> {{user}} </li>
+{% endfor %}
 </ul>
 </aside>
 <!--{{ context.tags }}
@@ -35,5 +45,14 @@
         {% endfor %}
         </ul>
 </aside>
+
+<script>
+    function zoomIn() {
+        document.getElementById("displayed_img").style.width = "30%";
+    }
+    function zoomOut() {
+        document.getElementById("displayed_img").style.width = "20%";
+    }
+</script>
 
 {% endblock %}

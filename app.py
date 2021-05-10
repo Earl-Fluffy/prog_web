@@ -63,8 +63,14 @@ def img(key):
             tagsSet = files.update_tagSet(tagsSet, new_tag)
     context = files.metadata(key)
     context = {"metadata": files.metadata(key),
-               "tags": list(tagsSet)}
-    return render_template('img.html', context=context)
+               "tags": list(tagsSet),
+               "users": files.getUsers()}
+    favUsers=[]
+    for user in context["users"]["Users"]:
+    	if int(key) in user["favorites"]:
+    	    favUsers.append(user["Username"])
+    
+    return render_template('img.html', context=context,favUsers=favUsers)
 
 @app.route('/about')
 def about():

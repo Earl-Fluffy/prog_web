@@ -49,3 +49,9 @@ li.navItem a.active {
   grid-gap: 10px;
   grid-auto-rows: minmax(100px, auto);
 }
+
+#displayed_img {
+    width: 20%;
+    height: auto;
+    border-radius: 25px;
+}

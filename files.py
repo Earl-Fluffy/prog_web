@@ -1,5 +1,5 @@
-from os import listdir, scandir
-from os.path import isfile, join
+from os import listdir, mkdir
+from os.path import isfile, join, exists
 import shutil
 import json
 
@@ -14,6 +14,9 @@ def metadata(key):
     ret = json.load(open(f"./static/tags/{key}.json", "r"))
     return ret
 
+def getUsers():
+    ret = json.load(open("./static/users.json","r"))
+    return ret
 
 def add_tag(key, tag):
     img_metadata = json.load(open(f"./static/tags/{key}.json", "r"))
@@ -42,6 +45,8 @@ if __name__ == "__main__":
              if isfile(f"./static/imgs/{f}")]
     print(len(files))
     files = sorted(files)
+    if not exists("./static/tags"):
+        mkdir("./static/tags")
     for i, f in enumerate(files):
         key = format(i, '06d')
         path = f"imgs/{key}.{f.split('.')[1]}"

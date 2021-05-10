@@ -2,7 +2,8 @@
 <html>
     <head>
         <title>{{page_title|default('crop land')}}</title>
-        <link href="{{ url_for('static',filename='style.css')}}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='style.css')}}" 
+              rel="stylesheet">
         {%block head%}{% endblock %}
     </head>
 
@@ -23,6 +24,8 @@
         </ul>
         
         {% block content %}{% endblock %}
+
+        <script src={{ url_for('static', filename="on_load.js") }}></script>
 
     </body>
 </html>
