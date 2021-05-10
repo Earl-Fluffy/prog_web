@@ -17,14 +17,21 @@
 {% endfor %}
 <form method='post' action="">
     <label for="newtag"> Add a tag :</label>
-    <input id="newtag" type="text" name="newtag">
+    <input id="newtag" type="text" name="newtag" list=tagsOptions>
+    <datalist id=tagsOptions>
+    {% for tag in context.tags %}
+    <option> {{tag}}
+    {% endfor %}
+    </datalist>
     <input type="submit" value="Submit">
 </form>
 </ul>
 
 <h3>Favoris pour :</h3>
 <ul>
-<li> Some more dynamic work </li>
+{% for user in favUsers %}
+<li> {{user}} </li>
+{% endfor %}
 </ul>
 </aside>
 <!--{{ context.tags }}

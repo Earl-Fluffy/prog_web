@@ -14,6 +14,9 @@ def metadata(key):
     ret = json.load(open(f"./static/tags/{key}.json", "r"))
     return ret
 
+def getUsers():
+    ret = json.load(open("./static/users.json","r"))
+    return ret
 
 def add_tag(key, tag):
     img_metadata = json.load(open(f"./static/tags/{key}.json", "r"))

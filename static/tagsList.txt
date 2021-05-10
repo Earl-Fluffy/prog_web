@@ -1,1 +1,4 @@
-happy	sad	cute	test
+happy
+sad
+cute
+test
