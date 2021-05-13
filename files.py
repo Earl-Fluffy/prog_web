@@ -18,6 +18,12 @@ def getUsers():
     ret = json.load(open("./static/users.json","r"))
     return ret
 
+def add_user(user):
+    users = json.load(open(f"./static/users.json","r"))
+    users["Users"].append({"Username":user[0], "age":user[1], "favorites":[]})
+    json.dump(users,open(f"./static/users.json","w"))
+
+
 def add_tag(key, tag):
     img_metadata = json.load(open(f"./static/tags/{key}.json", "r"))
     if not tag in img_metadata["tags"]:

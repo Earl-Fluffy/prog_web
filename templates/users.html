@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Users</h1>
+<section class="sectionWithSide">
+<ul>
+{% for user in context.users %}
+<li>{{user}}</li>
+{% endfor %}
+</ul>
+</section><aside>
+<h3>Add a new user</h3>
+<form method='post' action="">
+    <label for="username"> Username :</label><br>
+    <input id="username" type="text" name="username"><br>
+    <label for="age"> Age :</label><br>
+    <input id="age" type="number" name="age"><br>
+    <input type="submit" value="Submit">
+</form>
+</aside>
+{% endblock %}

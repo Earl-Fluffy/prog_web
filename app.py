@@ -38,7 +38,9 @@ def index():
     keys = files.keys()
     metadatas = [files.metadata(key) for key in keys]
     tags = request.args.get('pattern', '').split(" ")
-    if tags:
+    print(tags)
+    if tags[0]!='':
+        print("hey")
         for tag in tags:
             metadatas = [metadata for metadata in metadatas
                          if tag in metadata["tags"]]
@@ -71,6 +73,16 @@ def img(key):
     	    favUsers.append(user["Username"])
     
     return render_template('img.html', context=context,favUsers=favUsers)
+
+@app.route('/users',methods=["GET","POST"])
+def users():
+    if request.method=="POST":
+        newUser=[request.form["username"], int(request.form["age"])]
+        files.add_user(newUser)
+    users = [ user["Username"] for user in files.getUsers()["Users"]]
+    context={"users": users}
+    return render_template('users.html', context=context)
+    
 
 @app.route('/about')
 def about():
