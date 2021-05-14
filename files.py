@@ -15,13 +15,14 @@ def metadata(key):
     return ret
 
 def getUsers():
-    ret = json.load(open("./static/users.json","r"))
+    ret = json.load(open("./static/users.json", "r"))
     return ret
 
-def add_user(user):
-    users = json.load(open(f"./static/users.json","r"))
-    users["Users"].append({"Username":user[0], "age":user[1], "favorites":[]})
-    json.dump(users,open(f"./static/users.json","w"))
+def add_user(new_user):
+    users = json.load(open("./static/users.json", "r"))
+    users[new_user["username"]] = {"age": new_user["age"],
+                                   "favorites": []}
+    json.dump(users, open("./static/users.json", "w"))
 
 
 def add_tag(key, tag):

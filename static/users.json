@@ -1,1 +1,1 @@
-{"Users": [{"Username": "Johniton", "age": 21, "favorites": [0, 14, 6]}, {"Username": "Johnette", "age": 24, "favorites": [19, 10]}, {"Username": "JeanJohn", "age": 15, "favorites": []}, {"Username": "JohnJohn", "age": 25, "favorites": []}]}
+{"Johniton": {"age": 21, "favorites": [0, 14, 6]}, "Johnette": {"age": 24, "favorites": [19, 10]}, "JeanJohn": {"age": 15, "favorites": []}, "JohnJohn": {"age": 25, "favorites": []}}

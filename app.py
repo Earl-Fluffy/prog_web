@@ -29,8 +29,10 @@ def close_connection(exception):
         db.close()
 ## END: DO NOT MODIFY THIS PART ##
 
+
 # Get the tags list
 tagsSet = files.list_tags()
+
 
 @app.route('/')
 @app.route('/index')
@@ -39,8 +41,7 @@ def index():
     metadatas = [files.metadata(key) for key in keys]
     tags = request.args.get('pattern', '').split(" ")
     print(tags)
-    if tags[0]!='':
-        print("hey")
+    if tags[0] != '':
         for tag in tags:
             metadatas = [metadata for metadata in metadatas
                          if tag in metadata["tags"]]
@@ -53,6 +54,7 @@ def index():
     return render_template('index.html',
                            context=context)
 
+
 @app.route('/<key>', methods=["GET", "POST"])
 @app.route('/img/<key>', methods=["GET", "POST"])
 def img(key):
@@ -64,25 +66,28 @@ def img(key):
             tagsSet.add(new_tag)
             tagsSet = files.update_tagSet(tagsSet, new_tag)
     context = files.metadata(key)
+    users = files.getUsers()
     context = {"metadata": files.metadata(key),
                "tags": list(tagsSet),
-               "users": files.getUsers()}
-    favUsers=[]
-    for user in context["users"]["Users"]:
-    	if int(key) in user["favorites"]:
-    	    favUsers.append(user["Username"])
-    
-    return render_template('img.html', context=context,favUsers=favUsers)
+               "favUsers": [user for user in users
+                            if int(key) in users[user]["favorites"]]}
+    #favUsers = []
+    #for user in context["users"]:
+        #if int(key) in user["favorites"]:
+            #favUsers.append(user["Username"])
+    return render_template('img.html', context=context)
 
-@app.route('/users',methods=["GET","POST"])
+
+@app.route('/users', methods=["GET", "POST"])
 def users():
-    if request.method=="POST":
-        newUser=[request.form["username"], int(request.form["age"])]
+    if request.method == "POST":
+        newUser = {"username": request.form["username"],
+                   "age": int(request.form["age"])}
         files.add_user(newUser)
-    users = [ user["Username"] for user in files.getUsers()["Users"]]
-    context={"users": users}
+    users = files.getUsers().keys()
+    context = {"users": users}
     return render_template('users.html', context=context)
-    
+
 
 @app.route('/about')
 def about():
