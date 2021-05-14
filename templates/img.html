@@ -13,7 +13,7 @@
 <h3> Tags associés </h3>
 <ul>
 {% for tag in context.metadata.tags %}
-<li> {{ tag }}</li>
+<li> <a href="{{ url_for('index') }}?pattern={{ tag }}">{{ tag }}</a> </li>
 {% endfor %}
 <form method='post' action="">
     <label for="newtag"> Add a tag :</label>
