@@ -30,7 +30,7 @@
 <h3>Favoris pour :</h3>
 <ul>
 {% for user in context.favUsers %}
-<li> {{user}} </li>
+<li> <a href="{{ url_for('user', username=user) }}">{{ user }}</a></li>
 {% endfor %}
 </ul>
 </aside>
