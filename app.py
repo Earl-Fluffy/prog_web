@@ -89,6 +89,20 @@ def users():
     return render_template('users.html', context=context)
 
 
+@app.route('/users/<username>')
+def user(username):
+    users = files.getUsers()
+    if username in users:
+        user = users[username]
+        user["found"] = True
+        user["username"] = username
+        user["favorites"] = [files.metadata(key) for key in user["favorites"]]
+    else:
+        user = {"found": False}
+    context = {"tags": list(tagsSet)}
+    return render_template('user.html', user=user, context=context)
+
+
 @app.route('/about')
 def about():
     return make_response("test", 418)

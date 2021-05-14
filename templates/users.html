@@ -6,7 +6,7 @@
 <section class="sectionWithSide">
 <ul>
 {% for user in context.users %}
-<li>{{user}}</li>
+<li><a href="{{ url_for('user', username=user) }}">{{ user }}</a></li>
 {% endfor %}
 </ul>
 </section><aside>

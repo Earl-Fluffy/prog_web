@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if user.found %}
+<h1>{{ user.username }}</h1>
+
+<h2> Favorite images </h2>
+<section class="sectionWthSide">
+<div class="wrapper">
+{% for img in user.favorites %}
+	<a href="{{ url_for('img', key=img.id) }}">
+        <img src="{{ url_for('static', filename=img.path) }}" width=150>
+    </a>
+{% endfor %}
+</div>
+
+{% else %}
+user not found
+
+{% endif %}
+
+</section><aside>
+    <h3>Les tags</h3>
+        <ul>
+        {% for tag in context.tags %}
+        <li> 
+            <a href="{{ url_for('index') }}?pattern={{ tag }}">{{ tag }}</a>
+        </li>
+        {% endfor %}
+        </ul>
+</aside>
+
+{% endblock %}
