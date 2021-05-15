@@ -20,12 +20,16 @@
                            name="pattern">
 	                <button class="" type="submit">Search</button>
                 </form>
+                <li class="navItem" style="float:right">
+                    <button onclick="change_theme();">Change Theme</button>
+                </li>
             </li>
         </ul>
         
         {% block content %}{% endblock %}
 
-        <script src={{ url_for('static', filename="on_load.js") }}></script>
+        <script src="{{ url_for('static', filename='change_theme.js') }}">
+        </script>
 
     </body>
 </html>
