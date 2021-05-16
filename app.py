@@ -77,16 +77,14 @@ def img(key):
         if new_tag not in tagsSet:
             tagsSet.add(new_tag)
             tagsSet = files.update_tagSet(tagsSet, new_tag)
+    if key not in files.keys():
+        return make_response("404 Image not found", 404)
     context = files.metadata(key)
     users = files.getUsers()
     context = {"metadata": files.metadata(key),
                "tags": list(tagsSet),
                "favUsers": [user for user in users
                             if int(key) in users[user]["favorites"]]}
-    #favUsers = []
-    #for user in context["users"]:
-        #if int(key) in user["favorites"]:
-            #favUsers.append(user["Username"])
     return render_template('img.html', context=context)
 
 
