@@ -24,9 +24,16 @@
     <h3>Les tags</h3>
         <ul>
         {% for tag in context.tags %}
-        <li> <a href="{{ url_for('index') }}?pattern={{ tag }}">{{ tag }}</a></li>
+        <li> 
+            <a href="{{ url_for('index') }}?pattern={{ tag }}">{{ tag }}</a>
+        </li>
         {% endfor %}
         </ul>
+    <h3> Upload image </h3>
+    <form method="POST" action="" enctype="multipart/form-data">
+        <input type="file" name="new_img"><br>
+        <button type="submit">Submit</button>
+    </form>
 </aside>
 
 {% endblock %}

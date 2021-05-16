@@ -14,9 +14,11 @@ def metadata(key):
     ret = json.load(open(f"./static/tags/{key}.json", "r"))
     return ret
 
+
 def getUsers():
     ret = json.load(open("./static/users.json", "r"))
     return ret
+
 
 def add_user(new_user):
     users = json.load(open("./static/users.json", "r"))
@@ -39,12 +41,24 @@ def list_tags():
     else:
         return {}
 
+
 def update_tagSet(tagsSet, new_tag):
     tagsSet.add(new_tag)
     with open("./static/tagsList.txt", "w") as f:
         for line in tagsSet:
             f.write(line + "\n")
     return tagsSet
+
+
+def addTagFile(filename):
+    path = f"/imgs/{filename}"
+    filename = filename.split(".")[0]
+    json.dump({"id": filename,
+               "path": path,
+               "tags": []},
+              open(f"./static/tags/{filename}.json",
+                   "w"))
+
 
 if __name__ == "__main__":
 

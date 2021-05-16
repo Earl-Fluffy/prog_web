@@ -8,6 +8,7 @@ from flask import json
 
 import json as js
 import files
+import os
 
 
 # Set API dev in an another file
@@ -17,6 +18,7 @@ from api import SITE_API
 app = Flask(__name__,
             static_url_path="/static",
             static_folder="static")
+app.config['UPLOAD_FOLDER'] = "./static/imgs"
 # Add the API
 app.register_blueprint(SITE_API)
 
@@ -34,13 +36,23 @@ def close_connection(exception):
 tagsSet = files.list_tags()
 
 
-@app.route('/')
-@app.route('/index')
+@app.route('/', methods=["GET", "POST"])
+@app.route('/index', methods=["GET", "POST"])
 def index():
     keys = files.keys()
+
+    if request.method == "POST" and request.files['new_img'].filename != '':
+        new_img = request.files['new_img']
+        key = format(int(max(keys))+1, '06d')
+        keys.add(key)
+        ftype = new_img.filename.split(".")[1]
+        filename = f"{key}.{ftype}"
+        path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        new_img.save(path)
+        files.addTagFile(filename)
+
     metadatas = [files.metadata(key) for key in keys]
     tags = request.args.get('pattern', '').split(" ")
-    print(tags)
     if tags[0] != '':
         for tag in tags:
             metadatas = [metadata for metadata in metadatas
