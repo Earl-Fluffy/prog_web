@@ -36,7 +36,8 @@
 <h3>Add to favorites</h3>
 <form method='post' action="{{ url_for('fav_user', key=context.metadata.id) }}">
     <label for="newfav">for :</label>
-    <select id="newfav">
+    <select id="newfav"
+            name="newfav">
         <option value="">--Please choose a user--</option>
         {% for user in context.otherUsers %}
         <option value={{user}}>{{user}}</option>

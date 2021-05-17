@@ -77,33 +77,36 @@ def img(key):
         if new_tag not in tagsSet:
             tagsSet.add(new_tag)
             tagsSet = files.update_tagSet(tagsSet, new_tag)
-    
+
     if key not in files.keys():
         return make_response("404 Image not found", 404)
-        
+
     context = files.metadata(key)
     users = files.getUsers()
-    favUsers=[]
-    otherUsers=[]
+    favUsers = []
+    otherUsers = []
     for user in users:
         if int(key) in users[user]["favorites"]:
             favUsers.append(user)
-        else :
+        else:
             otherUsers.append(user)
     context = {"metadata": files.metadata(key),
                "tags": list(tagsSet),
                "favUsers": favUsers,
-               "otherUsers":otherUsers}
+               "otherUsers": otherUsers}
     return render_template('img.html', context=context)
+
 
 @app.route('/fav_user/<key>', methods=["POST"])
 def fav_user(key):
-    favUser = "Johniton" #request.form.get("newfav")
-    print(favUser)
-    
+    favUser = request.form.get("newfav")
+    app.logger.debug(key)
+    app.logger.debug(favUser)
+
     if favUser != "":
-        files.add_fav(favUser,int(key))
-    return redirect(url_for('img', key=key),code=303)
+        files.add_fav(favUser, int(key))
+    return redirect(url_for('img', key=key), code=303)
+
 
 @app.route('/users', methods=["GET", "POST"])
 def users():
