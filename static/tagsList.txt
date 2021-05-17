@@ -1,4 +1,5 @@
-happy
-sad
 cute
-test
+happy
+extra
+sad
+quote

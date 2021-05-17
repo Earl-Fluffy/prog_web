@@ -40,7 +40,7 @@ tagsSet = files.list_tags()
 @app.route('/index', methods=["GET", "POST"])
 def index():
     keys = files.keys()
-
+    
     if request.method == "POST" and request.files['new_img'].filename != '':
         new_img = request.files['new_img']
         key = format(int(max(keys))+1, '06d')
