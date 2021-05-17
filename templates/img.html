@@ -10,7 +10,7 @@
      onmouseout="zoomOut()">
 </section><aside>
 
-<h3> Tags associés </h3>
+<h3> Linked tags </h3>
 <ul>
 {% for tag in context.metadata.tags %}
 <li> <a href="{{ url_for('index', pattern=tag) }}">{{ tag }}</a> </li>
@@ -27,18 +27,26 @@
 </form>
 </ul>
 
-<h3>Favoris pour :</h3>
+<h3>Users who like this :</h3>
 <ul>
 {% for user in context.favUsers %}
 <li> <a href="{{ url_for('user', username=user) }}">{{ user }}</a></li>
 {% endfor %}
 </ul>
+<h3>Add to favorites</h3>
+<form method='post' action="{{ url_for('fav_user', key=context.metadata.id) }}">
+    <label for="newfav">for :</label>
+    <select id="newfav">
+        <option value="">--Please choose a user--</option>
+        {% for user in context.otherUsers %}
+        <option value={{user}}>{{user}}</option>
+        {% endfor %}
+    <input type="submit" value="Submit">
+</form>
 </aside>
-<!--{{ context.tags }}
-{{ context.path }} -->
 
-</section><aside>
-    <h3>Les tags</h3>
+<aside>
+    <h3>The tags</h3>
         <ul>
         {% for tag in context.tags %}
         <li> <a href="{{ url_for('index', pattern=tag) }}">{{ tag }}</a></li>

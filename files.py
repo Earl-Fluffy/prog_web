@@ -26,6 +26,11 @@ def add_user(new_user):
                                    "favorites": []}
     json.dump(users, open("./static/users.json", "w"))
 
+def add_fav(user,key):
+    users= json.load(open("./static/users.json", "r"))
+    users[user]["favorites"].append(key)
+    
+    json.dump(users, open("./static/users.json", "w"))
 
 def add_tag(key, tag):
     img_metadata = json.load(open(f"./static/tags/{key}.json", "r"))

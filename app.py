@@ -2,7 +2,7 @@
 # coding: utf-8
 
 from flask import Flask, g
-from flask import abort, request, make_response
+from flask import abort, request, make_response, redirect, url_for
 from flask import render_template
 from flask import json
 
@@ -77,16 +77,33 @@ def img(key):
         if new_tag not in tagsSet:
             tagsSet.add(new_tag)
             tagsSet = files.update_tagSet(tagsSet, new_tag)
+    
     if key not in files.keys():
         return make_response("404 Image not found", 404)
+        
     context = files.metadata(key)
     users = files.getUsers()
+    favUsers=[]
+    otherUsers=[]
+    for user in users:
+        if int(key) in users[user]["favorites"]:
+            favUsers.append(user)
+        else :
+            otherUsers.append(user)
     context = {"metadata": files.metadata(key),
                "tags": list(tagsSet),
-               "favUsers": [user for user in users
-                            if int(key) in users[user]["favorites"]]}
+               "favUsers": favUsers,
+               "otherUsers":otherUsers}
     return render_template('img.html', context=context)
 
+@app.route('/fav_user/<key>', methods=["POST"])
+def fav_user(key):
+    favUser = "Johniton" #request.form.get("newfav")
+    print(favUser)
+    
+    if favUser != "":
+        files.add_fav(favUser,int(key))
+    return redirect(url_for('img', key=key),code=303)
 
 @app.route('/users', methods=["GET", "POST"])
 def users():
