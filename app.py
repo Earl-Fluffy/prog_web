@@ -18,7 +18,6 @@ from api import SITE_API
 app = Flask(__name__,
             static_url_path="/static",
             static_folder="static")
-app.config['UPLOAD_FOLDER'] = "./static/imgs"
 # Add the API
 app.register_blueprint(SITE_API)
 
@@ -36,21 +35,11 @@ def close_connection(exception):
 tagsSet = files.list_tags()
 
 
-@app.route('/', methods=["GET", "POST"])
-@app.route('/index', methods=["GET", "POST"])
+@app.route('/', methods=["GET"])
+@app.route('/index', methods=["GET"])
 def index():
+    tagsSet = files.list_tags()
     keys = files.keys()
-
-    if request.method == "POST" and request.files['new_img'].filename != '':
-        new_img = request.files['new_img']
-        key = format(int(max(keys))+1, '06d')
-        keys.add(key)
-        ftype = new_img.filename.split(".")[1]
-        filename = f"{key}.{ftype}"
-        path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        new_img.save(path)
-        files.addTagFile(filename)
-
     metadatas = [files.metadata(key) for key in keys]
     tags = request.args.get('pattern', '').split(" ")
     if tags[0] != '':
@@ -67,20 +56,13 @@ def index():
                            context=context)
 
 
-@app.route('/<key>', methods=["GET", "POST"])
-@app.route('/img/<key>', methods=["GET", "POST"])
+@app.route('/<key>', methods=["GET"])
+@app.route('/img/<key>', methods=["GET"])
 def img(key):
-    global tagsSet
-    if request.method == "POST":
-        new_tag = request.form['newtag'].replace(' ', '_')
-        files.add_tag(key, new_tag)
-        if new_tag not in tagsSet:
-            tagsSet.add(new_tag)
-            tagsSet = files.update_tagSet(tagsSet, new_tag)
-
+    #global tagsSet
+    tagsSet = files.list_tags()
     if key not in files.keys():
         return make_response("404 Image not found", 404)
-
     context = files.metadata(key)
     users = files.getUsers()
     favUsers = []
@@ -97,23 +79,8 @@ def img(key):
     return render_template('img.html', context=context)
 
 
-@app.route('/fav_user/<key>', methods=["POST"])
-def fav_user(key):
-    favUser = request.form.get("newfav")
-    app.logger.debug(key)
-    app.logger.debug(favUser)
-
-    if favUser != "":
-        files.add_fav(favUser, int(key))
-    return redirect(url_for('img', key=key), code=303)
-
-
-@app.route('/users', methods=["GET", "POST"])
+@app.route('/users', methods=["GET"])
 def users():
-    if request.method == "POST":
-        newUser = {"username": request.form["username"],
-                   "age": int(request.form["age"])}
-        files.add_user(newUser)
     users = files.getUsers().keys()
     context = {"users": users}
     return render_template('users.html', context=context)
@@ -121,6 +88,7 @@ def users():
 
 @app.route('/users/<username>')
 def user(username):
+    tagsSet = files.list_tags()
     users = files.getUsers()
     if username in users:
         user = users[username]

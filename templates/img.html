@@ -15,7 +15,7 @@
 {% for tag in context.metadata.tags %}
 <li> <a href="{{ url_for('index', pattern=tag) }}">{{ tag }}</a> </li>
 {% endfor %}
-<form method='post' action="">
+<form method='post' action="{{url_for('api.add_tag', key=context.metadata.id)}}">
     <label for="newtag"> Add a tag :</label>
     <input id="newtag" type="text" name="newtag" list=tagsOptions>
     <datalist id=tagsOptions>
@@ -34,7 +34,7 @@
 {% endfor %}
 </ul>
 <h3>Add to favorites</h3>
-<form method='post' action="{{ url_for('fav_user', key=context.metadata.id) }}">
+<form method='post' action="{{ url_for('api.fav_user', key=context.metadata.id) }}">
     <label for="newfav">for :</label>
     <select id="newfav"
             name="newfav">
